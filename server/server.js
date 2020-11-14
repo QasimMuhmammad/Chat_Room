@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
     // Check cookies if they were here from before, if yes give old username
 
     // If not old user, give them a new username 
-    let user = 'Username' + userCount++;
+    let user = 'username' + userCount++;
     colorForUser = '000000'
     userForInstance = {user:user, color:colorForUser};
 
@@ -114,7 +114,7 @@ io.on('connection', (socket) => {
           // New username, lets replace all old messages with new one, 
           // change this instance var and also send a intialize and a io emit
           
-          let newUser = split[1]
+          let newUser = split[1].toLowerCase()
           let index = onlineUsers.indexOf(newUser.toLowerCase());
           let index2 = uniqueUserNames.indexOf(newUser.toLowerCase());
           if (index === -1 && index2 === -1) {

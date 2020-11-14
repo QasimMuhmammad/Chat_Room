@@ -31,7 +31,7 @@ export const loadInitialDataSocket = (socket) => {
     if(cookieKey('username')){
         return (dispatch) => {
             socket.on('initialize',(res)=>{
-                document.cookie = `username=${res.user.user}; path=/; max-age=31536000`;
+                document.cookie = `username=${res.user.user.toLowerCase()}; path=/; max-age=31536000`;
                 document.cookie = `color=${res.user.color}; path=/; max-age=31536000`;
                 console.log('In initialize: ',res)
                 dispatch(initialize(res))

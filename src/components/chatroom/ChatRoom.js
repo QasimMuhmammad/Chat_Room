@@ -35,7 +35,8 @@ class ChatRoom extends React.Component{
 	   socket.on('update',(data)=>{
 		   console.log('Retrieved update', data)
 		   dispatch(update(data))
-	   })
+       })
+       this.state = {userMessage:''}
    }
 
    componentWillUnmount() {
@@ -49,13 +50,11 @@ class ChatRoom extends React.Component{
     }
 
     handleClick = () => {
+      if(this.state.userMessage.length > 0){
         let messageObj = {content: this.state.userMessage, user:this.props.data.username.user, color:this.props.data.username.color}
         console.log('Sending',messageObj);
-        // Check if it is change username or change color, if so send appropriate message to server
-
-
-
-        socket.emit('send-message',messageObj);
+            socket.emit('send-message',messageObj);
+        }
       };
 
     handleMessageChange = (e) =>{
@@ -105,7 +104,7 @@ class ChatRoom extends React.Component{
                     <Segment key={'message'+ind} style={{backgroundColor:'#eeeeee'}}> 
                         <Header style={{textAlign: '-webkit-right', marginBottom: '10px', marginRight:'-5px'}} as='h3' >
                             <Icon style={{float:'right'}} size='massive' name='user circle outline' />
-                            <Header.Content style={{color:textColor, textAlign:'right', margin:'7px;'}} content={message.user} />
+                            <Header.Content style={{color:textColor, textAlign:'right', margin:'7px'}} content={message.user} />
                         </Header>
                         <div style={{textAlign:'right'}}>   
                                 <Emoji style={{color:textColor,fontWeight: 'bold'}} text = {message.content} />
@@ -154,7 +153,7 @@ class ChatRoom extends React.Component{
                     {this.createMessageList()}
                 </Segment.Group>
                 <Segment style={{maxHeight: '9vh', height:'9vh'}}>
-                        <Input fluid placeholder='Enter a message for discussion...' onChange={this.handleMessageChange} action={{content:'Enter', onClick: (e) => this.handleClick()}}/>
+                        <Input fluid placeholder='Enter a message for discussion...' onChange={this.handleMessageChange} action={{defaultValue:'', content:'Enter', onClick: (e) => this.handleClick()}}/>
                 </Segment>
             </Segment.Group>
             </Grid.Column>
